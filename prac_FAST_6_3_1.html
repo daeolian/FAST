@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fast</title>
+    <script src="lib_6_3_1/jspsych.js"></script>
+    <script src="lib_6_3_1/plugins/jspsych-html-button-response.js"></script>
+    <script src="lib_6_3_1/plugins/jspsych-survey-text.js"></script>
+    <link rel="stylesheet" href="lib_6_3_1/jspsych.css">
+  </head>
+  <body></body>
+  <script>
+
+    var timeline = [];
+    var n_trial = 5;
+    var str_n_trial = n_trial.toString();
+    /* Instructions */
+    
+    var instructions_1 = {
+      type: 'html-button-response',
+      stimulus: '<div style="width: 1200px;">'+
+        '<p>This experiment will ask you to generate a concept as a word or phrase that came to your mind.</p>'+
+        '<p><br>At first, initial word is given.</p>'+
+        '<p>Then, generate a concept as a word or phrase in response to the previous concept you generated.</p>'+
+        '<p>( Total trial = '+str_n_trial+' )</p>'+
+        '<br></div>',
+      choices: ["Continue"]
+    }
+
+    timeline.push(instructions_1);
+
+    var timeline_variables = []
+
+    // Initial word
+    letter = 'Family'
+    /* */
+
+    var type_word = {
+      type: 'survey-text',
+      preamble: function() {
+          return '<div style="width: 1200px;">'+
+          letter+
+          '</div>'
+        },
+      questions: [
+        {prompt: '<div style="width: 1200px;">'+
+          '<p>Generate a concept as a word or phrase in response to the presented concept</p>'+
+          '</div>', rows: 1}
+      ],
+      data: {
+        stimulus: letter,
+        task: 'response',
+      },
+      on_finish: function(data){
+        letter = data.response.Q0
+
+      }
+    }
+    
+    for (var ii = 0; ii < n_trial; ii++) {
+        timeline.push(type_word);
+    }
+
+    jsPsych.init({
+      timeline: timeline
+    })
+
+  </script>
+</html>
