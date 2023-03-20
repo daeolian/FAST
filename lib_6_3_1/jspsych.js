@@ -936,6 +936,17 @@ window.jsPsych = (function() {
       DOM_target.innerHTML = timeline.end_message;
     }
 
+
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    }
+
     opts.on_finish(jsPsych.data.get());
 
   }
